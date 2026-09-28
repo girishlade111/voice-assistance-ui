@@ -1,30 +1,81 @@
-# Voice assistance ui
+# Voice Assistance UI — AI Travel Assistant
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+A conversational travel-planning UI with an AI voice assistant that helps you discover attractions, hotels, and restaurants within your budget. Uses the browser's built-in **Web Speech API** for voice input (SpeechRecognition) and voice output (SpeechSynthesis) — no API keys or backend required.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/gileb64375-5584s-projects/v0-voice-assistance-ui)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/B61sDzsPDDW)
+## What it does
 
-## Overview
+- Guides you through a step-by-step conversation: destination → budget → preferences → results.
+- Listens to your voice answers and speaks responses back (multilingual, via the language selector).
+- Generates mock travel recommendations: attraction cards, hotel cards, and restaurant cards with ratings and prices.
+- Keeps a conversation history sidebar and a map-style results view.
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## Features
+
+- Voice mode powered by the Web Speech API (recognition + speech synthesis), free and client-side
+- Typed fallback input for browsers without SpeechRecognition
+- Multi-language support via the language selector
+- Budget-aware recommendation flow
+- Rich result cards: attractions, hotels, restaurants (with map-view layout)
+- Conversation history panel
+- Dark gradient travel-themed design, responsive
+
+## Tech stack
+
+- **Framework:** Next.js 15.2 (App Router), React 19, TypeScript
+- **Styling:** Tailwind CSS, shadcn/ui primitives
+- **Voice:** Web Speech API (SpeechRecognition / speechSynthesis) — browser-native
+- **Icons:** Lucide React
+- **Observability:** `@vercel/analytics`
+
+## Quick start
+
+Requirements: Node.js 18+. Voice features work best in Chrome/Edge.
+
+```bash
+npm install          # or: pnpm install
+npm run dev          # open http://localhost:3000
+```
+
+Static production build:
+
+```bash
+npm run build        # outputs to out/
+npx serve out
+```
+
+## Environment variables
+
+None. Recommendations are generated client-side (mock/demo data); the voice features use browser APIs only.
+
+## Project structure
+
+```
+app/
+  page.tsx            # landing hero + <VoiceAssistant />
+  layout.tsx          # root layout, fonts, theme provider
+  globals.css
+components/
+  voice-assistant.tsx      # conversation engine, voice I/O, state machine
+  language-selector.tsx    # speech language picker
+  conversation-history.tsx # transcript sidebar
+  attraction-card.tsx      # attraction result card
+  hotel-card.tsx           # hotel result card
+  restaurant-card.tsx      # restaurant result card
+  map-view.tsx             # results map layout
+  ui/                      # shadcn/ui primitives
+lib/utils.ts
+public/               # static assets
+```
 
 ## Deployment
 
-Your project is live at:
+Fully static — no API routes, no server actions, no env vars. `next.config.mjs` sets `output: 'export'`; `npm run build` produces a deployable `out/` directory for GitHub Pages, Vercel, Netlify, or any static host.
 
-**[https://vercel.com/gileb64375-5584s-projects/v0-voice-assistance-ui](https://vercel.com/gileb64375-5584s-projects/v0-voice-assistance-ui)**
+**Note:** `basePath: '/voice-assistance-ui'` is set because this copy is deployed to GitHub Pages under the repo subpath. Remove the `basePath` line when deploying to a root domain.
 
-## Build your app
+## License
 
-Continue building your app on:
+Free to use and adapt.
 
-**[https://v0.app/chat/projects/B61sDzsPDDW](https://v0.app/chat/projects/B61sDzsPDDW)**
-
-## How It Works
-
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+---
+Built by Girish Lade · https://ladestack.in
